@@ -158,6 +158,22 @@
 
 
   <script>
+    let tipoDispositivo = "pc";
+
+function detectarDispositivo() {
+  const esMovil = /android|iphone|ipad|mobile/i.test(navigator.userAgent);
+  const usarMovil = confirm(esMovil
+    ? "Estás usando un móvil. ¿Deseas usar la versión optimizada para celular?"
+    : "¿Estás usando un teléfono móvil?");
+  tipoDispositivo = usarMovil ? "movil" : "pc";
+
+  if (tipoDispositivo === "movil") {
+    document.body.style.fontSize = "18px";
+    document.querySelector("h1").innerText += " (Versión Móvil)";
+    document.querySelectorAll("nav button").forEach(btn => btn.style.padding = "15px 20px");
+  }
+}
+
     const ejercicios = {
       "Pecho": ["Press de banca", "Inclinaciones con mancuernas", "Flexiones"],
       "Espalda": ["Remo con barra", "Peso muerto", "Jalones al pecho"],
@@ -312,6 +328,10 @@
 
       localStorage.setItem("rutinaSesion", JSON.stringify({ resumen, rutina, recomendacion: document.getElementById("recomendacion").innerHTML }));
     });
+    window.onload = function () {
+  detectarDispositivo();
+};
+
   </script>
 </body>
 </html>
